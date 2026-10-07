@@ -1,23 +1,18 @@
-# Python bytecode & cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.ipynb_checkpoints/
 
-# Virtual environments
 .venv/
 venv/
 ENV/
 env/
 
-# Data artifacts & caches (Raw and Processed)
+# Ignore raw bulky dumps and caches
 data/raw/
-data/processed/
-*.parquet
-*.csv
 *.zip
 
-# Logs & temp files
+# Ignore logs
 *.log
 .DS_Store
 Thumbs.db
