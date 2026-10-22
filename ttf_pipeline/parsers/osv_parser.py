@@ -131,8 +131,8 @@ def parse_osv_directory(source_dir: Path) -> pd.DataFrame:
 
     df = pd.DataFrame(all_records)
     if not df.empty:
-        df["published_at"] = pd.to_datetime(df["published_at"], errors="coerce", utc=True)
-        df["modified_at"] = pd.to_datetime(df["modified_at"], errors="coerce", utc=True)
+        df["published_at"] = pd.to_datetime(df["published_at"], format="mixed", errors="coerce", utc=True)
+        df["modified_at"] = pd.to_datetime(df["modified_at"], format="mixed", errors="coerce", utc=True)
 
     logger.info("Parsed %d records", len(df))
     return df

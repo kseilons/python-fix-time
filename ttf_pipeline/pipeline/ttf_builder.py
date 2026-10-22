@@ -34,9 +34,9 @@ def build_ttf_dataset(
 
     df = osv_df.copy()
     df["matched_fixed_version"] = matched_versions
-    df["fixed_release_datetime"] = pd.to_datetime(fixed_release_dates, errors="coerce", utc=True)
-    df["published_at"] = pd.to_datetime(df["published_at"], errors="coerce", utc=True)
-    df["modified_at"] = pd.to_datetime(df["modified_at"], errors="coerce", utc=True)
+    df["fixed_release_datetime"] = pd.to_datetime(fixed_release_dates, format="mixed", errors="coerce", utc=True)
+    df["published_at"] = pd.to_datetime(df["published_at"], format="mixed", errors="coerce", utc=True)
+    df["modified_at"] = pd.to_datetime(df["modified_at"], format="mixed", errors="coerce", utc=True)
 
     time_diff = (df["fixed_release_datetime"] - df["published_at"]).dt.total_seconds()
     df["ttf_days"] = time_diff / 86400.0
@@ -61,6 +61,8 @@ def build_ttf_dataset(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(output_path, index=False)
+    csv_path = output_path.with_suffix(".csv")
+    df.to_csv(csv_path, index=False)
 
     total = len(df)
     matched = df["matched_fixed_version"].notna().sum()
