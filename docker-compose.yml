@@ -67,3 +67,18 @@ services:
       - elasticsearch
 
   # 4. Apache Spark 
+  spark:
+    image: apache/spark-py:latest
+    container_name: bigdata-spark
+    user: root
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: tail -f /dev/null
+    depends_on:
+      - namenode
+      - kafka
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:

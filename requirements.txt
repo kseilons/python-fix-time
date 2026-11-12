@@ -7,3 +7,10 @@ jupyter>=1.0.0
 matplotlib>=3.8.0
 seaborn>=0.13.0
 cvss>=3.3
+kafka-python-ng
+hdfs
+pyspark==3.5.3
+elasticsearch==8.17.4
+scipy
+scikit-learn
+setuptools
