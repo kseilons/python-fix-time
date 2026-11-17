@@ -93,9 +93,10 @@ def main():
     consumed_records = [msg.value for msg in consumer]
     consumer.close()
 
-    local_dump = DATA_RAW_DIR / "kafka_stream_dump.json"
+    local_dump = DATA_RAW_DIR / "kafka_stream_dump.jsonl"
     with open(local_dump, "w", encoding="utf-8") as f:
-        json.dump(consumed_records, f, ensure_ascii=False, indent=2)
+        for rec in consumed_records:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
     dump_size_mb = os.path.getsize(local_dump) / (1024 * 1024)
 
