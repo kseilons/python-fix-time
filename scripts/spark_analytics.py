@@ -10,7 +10,7 @@ from pyspark.ml.evaluation import RegressionEvaluator
 
 HDFS_RAW_PATH = "hdfs://namenode:9000/bigdata/raw/vuln_raw_stream.json"
 HDFS_OUT_PATH = "hdfs://namenode:9000/bigdata/processed/ttf_spark_final.parquet"
-LOCAL_OUT_JSON = "/app/data/processed/ttf_spark_final.json"
+LOCAL_OUT_JSON = "file:///app/data/processed/ttf_spark_final.json"
 
 CWE_CATEGORIES = {
     "CWE-79": "XSS (Межсайтовый скриптинг)",
