@@ -10,7 +10,7 @@ cvss>=3.3
 kafka-python-ng
 hdfs
 pyspark==3.5.3
-elasticsearch==8.17.4
+elasticsearch>=8.0.0,<9.0.0
 scipy
 scikit-learn
 setuptools
