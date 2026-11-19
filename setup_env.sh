@@ -17,7 +17,9 @@ source .venv/bin/activate || source .venv/Scripts/activate
 pip install -r requirements.txt
 
 echo "Установка numpy для PySpark MLlib в контейнер bigdata-spark..."
-docker exec bigdata-spark pip install numpy
+pip download numpy --only-binary=:all: --platform manylinux2014_x86_64 --python-version 310 -d data/tmp_wheels
+docker exec bigdata-spark pip install --no-index --find-links=/app/data/tmp_wheels numpy
+rm -rf data/tmp_wheels
 
 echo " [3/3] Проверка работы контейнеров"
 echo "================================================================="
