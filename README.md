@@ -11,14 +11,23 @@
 ```text
 python-fix-time/
 ├── data/
-│   ├── raw/                  # Дампы OSV и кэш PyPI
-│   └── processed/            # ttf_dataset.parquet и ttf_dataset.csv
+│   ├── raw/                        # Дампы OSV и кэш PyPI
+│   └── processed/                  # ttf_dataset.parquet, ttf_dataset.csv и ttf_spark_final.json
+├── scripts/
+│   ├── run_ingestion.py            # Сбор данных и потоковая загрузка
+│   ├── spark_analytics.py          # Расчет метрик, агрегации и модели машинного обучения
+│   └── hypotheses_and_elastic.py   # Проверка гипотез и загрузка данных в хранилище
 ├── notebooks/
 │   └── data_exploration.ipynb
-├── ttf_pipeline/             # Логика клиентов, парсеров и расчет метрик
-├── fetch_osv.py              # Скачивание и парсинг дампа OSV
-├── fetch_pypi.py             # Сбор дат релизов из PyPI API
-├── build_dataset.py          # Расчет TTF и сборка датасета
+├── ttf_pipeline/                   # Логика клиентов, парсеров и расчет метрик
+├── legacy/                         # Скрипты сбора данных первого этапа
+│   ├── fetch_osv.py                # Скачивание и парсинг дампа OSV
+│   ├── fetch_pypi.py               # Сбор дат релизов из PyPI API
+│   └── build_dataset.py            # Расчет TTF и сборка датасета
+├── docker-compose.yml              # Конфигурация контейнеров кластера
+├── setup_env.sh                    # Установка зависимостей и подготовка окружения
+├── run_pipeline.sh                 # Запуск полного конвейера
+├── kibana_dashboard.ndjson         # Конфигурация дашборда Kibana
 ├── requirements.txt
 └── README.md
 ```
@@ -36,6 +45,22 @@ python build_dataset.py
 # Анализ
 jupyter notebook notebooks/data_exploration.ipynb
 ```
+
+### Запуск распределенного конвейера 
+
+```bash
+# Подготовка окружения и запуск контейнеров
+bash setup_env.sh
+
+# Запуск конвейера обработки данных
+bash run_pipeline.sh
+```
+
+### Импорт дашборда в Kibana
+
+1. Открыть `http://localhost:5601` -> меню слева сверху -> **Management -> Stack Management -> Kibana -> Saved Objects**.
+2. Нажать **Import**, выбрать файл `kibana_dashboard.ndjson`, подтвердить загрузку.
+3. Перейти в меню -> **Analytics -> Dashboards**, открыть **`PyPI Vulnerability Lifecycle Dashboard`** и выбрать период **Last 15 years** в правом верхнем углу.
 
 ## Датасет (`data/processed/ttf_dataset.parquet`)
 
