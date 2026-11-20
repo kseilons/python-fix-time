@@ -13,7 +13,7 @@ def main():
     if not json_files:
         raise FileNotFoundError("Не найден файл результата Spark в data/processed/ttf_spark_final.json/")
 
-    df = pd.read_json(json_files, lines=True)
+    df = pd.read_json(json_files[0], lines=True)
     print(f"Загружено записей из витрины Spark: {len(df)}")
 
     # ЗАДАЧА 5: Проверка статистических гипотез 
